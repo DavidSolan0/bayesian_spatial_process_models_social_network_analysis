@@ -43,22 +43,21 @@ visNetwork(nodes = graph.net$nodes, edges = graph.net$edges, main ='Red Simulada
   visPhysics(solver = "forceAtlas2Based", 
              forceAtlas2Based = list(gravitationalConstant = -50))
 
-
 #-------------------------------------------------------------------------------------------
-# AN¡LISIS DESCRIPTIVO
+# AN√ÅLISIS DESCRIPTIVO
 #-------------------------------------------------------------------------------------------
 
 Adj.obj = Yadj
-ecount(net.data);vcount(net.data) # N˙mero edges y vertices
+ecount(net.data);vcount(net.data) # N√∫mero edges y vertices
 
-#* An·lisis del grado 
+#* An√°lisis del grado 
 d.net = degree(net.data)
 fig <- plot_ly(x = d.net,
                type = "histogram",marker = list(color = 'rgb(158,202,225)',
                                                 line = list(color = 'rgb(8,48,107)',
                                                             width = 1.5))) %>% 
   layout(title = "",
-         xaxis = list(title = " Grado del vÈrtice"),
+         xaxis = list(title = " Grado del v√©rtice"),
          yaxis = list(title = "Frecuencia"),
          font = list(size = 14))
 fig
@@ -71,7 +70,7 @@ fig <- plot_ly(data = data, x = ~x, y = ~y,
                              color = 'rgba(255, 182, 193, .9)',
                              line = list(color = 'rgba(152, 0, 0, .8)',
                                          width = 2))) %>% 
-  layout(xaxis = list(title = " Grado del vÈrtice"),
+  layout(xaxis = list(title = " Grado del v√©rtice"),
          yaxis = list(title = "Grado Promedio de los Vecinos"),
          font = list(size = 14))  
 
@@ -194,7 +193,7 @@ edge_density(net.data.gc)
 (net.data.cut.vertices <- articulation_points(net.data.gc))
 length(net.data.cut.vertices)
 
-#* ParticiÛn gran compontente 
+#* Partici√≥n gran compontente 
 
 kc <- cluster_fast_greedy(net.data.gc)
 length(kc)
@@ -212,6 +211,6 @@ visNetwork(nodes, edges) %>%
              forceAtlas2Based = list(gravitationalConstant = -100))
 
 
-#* An·lisis de asortatividad
+#* An√°lisis de asortatividad
 assortativity_degree(net.data)
 assortativity_degree(net.data.gc)
