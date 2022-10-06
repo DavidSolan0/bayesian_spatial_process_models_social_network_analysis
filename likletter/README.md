@@ -1,4 +1,4 @@
-This folder contains the codes implemented to do a entire analysis of the network data. We strongly encorage the reader to user them in the following order:
+This folder contains the codes implemented to do a complete analysis of the network data. Therefore, we strongly encourage the reader to use them in the following order:
 
 * [descriptive](https://github.com/DavidSolan0/bayesian_spatial_process_models_social_network_analysis/blob/main/likletter/fit/descriptive.R): Here we do a data **descriptive** analysis. In case that you more than two covariates and want to study the estimated surface this EDA can give you insights to determine which couple of covariates you should conserv. 
 
