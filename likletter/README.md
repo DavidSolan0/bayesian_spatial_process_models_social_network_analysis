@@ -6,5 +6,6 @@ This folder contains the codes implemented to do a complete analysis of the netw
 
 * [gof](https://github.com/DavidSolan0/bayesian_spatial_process_models_social_network_analysis/blob/main/likletter/fit/gof.R): Here we do a goodness-of-fit evaluation of the model with specific metrics of interest. You could use these metrics to test your model's performance or use more suitable ones if that is the case. 
 
+* [cv](https://github.com/DavidSolan0/bayesian_spatial_process_models_social_network_analysis/blob/main/likletter/cv/cv.R): Here we test the model predictive performance. 
 
 
