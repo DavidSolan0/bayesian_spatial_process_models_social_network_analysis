@@ -1,15 +1,17 @@
 rm(list = ls())
 
-loc       <- "C:/Users/David.solano/OneDrive - Ipsos/David/Trabjo de Grado Maestria/CODIGOS/Trabajo de Grado - Codigos/Synthetic1/"
+loc       <- "likletter/fit"
 model     <- "LSSP"
 dataset   <- "synthetic"
 prefix    <- paste0(model,"_",dataset)
 path_outs <- loc
 seed      <- 1     
 
-base::source   (paste0(loc, "rfunctions.R"))
-Rcpp::sourceCpp(paste0(loc, "cfunctions.cpp"))
+base::source(paste0(loc, "/src/R/model/plot_functions.R"))
+Rcpp::sourceCpp(paste0(loc, "/src/cpp/cfunctions.cpp"))
 
+
+install.packages("RcppArmadillo")
 ### data generation
 ### p: no. covariates
 ### n: no. actors
@@ -42,7 +44,8 @@ n_skip <- 10
 
 ptm <- proc.time()
 set.seed(1234)
-#MCMC(Y, X, W, n, p, m, n_sams, n_burn, n_skip, prefix, path_outs)
+# Comment this line once the model is trained
+MCMC(Y, X, W, n, p, m, n_sams, n_burn, n_skip, prefix, path_outs)
 ptm <- proc.time() - ptm
 
 ### load samples
