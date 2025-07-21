@@ -64,7 +64,7 @@ double loglik (const int& n, const int& p, const int& m, const double& mu, const
         for (i = 0; i < n-1; i++) {
                 for (j = i+1; j < n; j++) {
                         eta = mu - abs(zeta(p, m, X.row(i), alpha, sig2, W) - zeta(p, m, X.row(j), alpha, sig2, W));
-                        out += R::pnorm(eta, 0, 1, Y.at(0.5*(n*(n-1)-(n-i)*(n-i-1))+j-i-1), 1); // Por qué no es rbinom (?)
+                        out += R::pnorm(eta, 0, 1, Y.at(0.5*(n*(n-1)-(n-i)*(n-i-1))+j-i-1), 1); // Por quï¿½ no es rbinom (?)
                 }
         }
         return(out);
@@ -182,10 +182,10 @@ void  MCMC(const uvec& Y, const mat& X, const mat& W, const int& n, const int& p
         // open output files
         char* full;
         string nam;
-        nam = "ll_chain"   ; full = mypaste0(path_outs, prefix, nam); ofstream ll_chain   ; ll_chain.open(full)   ;
-        nam = "mu_chain"   ; full = mypaste0(path_outs, prefix, nam); ofstream mu_chain   ; mu_chain.open(full)   ;
-        nam = "sig2_chain" ; full = mypaste0(path_outs, prefix, nam); ofstream sig2_chain ; sig2_chain.open(full) ;
-        nam = "alpha_chain"; full = mypaste0(path_outs, prefix, nam); ofstream alpha_chain; alpha_chain.open(full);
+        nam = "ll_chain"   ; full = mypaste0(path_outs, prefix, nam); ofstream ll_chain   ; ll_chain.open(full)   ; Rcpp::Rcout << "Writing ll_chain to: " << full << endl;
+        nam = "mu_chain"   ; full = mypaste0(path_outs, prefix, nam); ofstream mu_chain   ; mu_chain.open(full)   ; Rcpp::Rcout << "Writing mu_chain to: " << full << endl;
+        nam = "sig2_chain" ; full = mypaste0(path_outs, prefix, nam); ofstream sig2_chain ; sig2_chain.open(full) ; Rcpp::Rcout << "Writing sig2_chain to: " << full << endl;
+        nam = "alpha_chain"; full = mypaste0(path_outs, prefix, nam); ofstream alpha_chain; alpha_chain.open(full); Rcpp::Rcout << "Writing alpha_chain to: " << full << endl;
         // chain
         int l, b, B = n_burn + n_skip*n_sams, n_disp = floor(0.1*double(B));
         for (b = 1; b <= B; b++) {

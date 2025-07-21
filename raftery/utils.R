@@ -56,9 +56,7 @@ hist_plot <- function(x, main, truth)
         if (!missing(truth)) abline(v = truth, lty = 1, col = 2, lwd = 2)
 }
 
-data_gen2 <- function(n, mu, X, g, plotit = T,seed=NULL,
-                      font_size=40,main='Graph',layout='layout_with_kk',
-                      gravitation=150) 
+data_gen2 <- function(n, mu, X, g, plotit = T) 
 {
         ### simulates a data set following a LSSP model as in Linkletter 2007
         ### p = 2 covariates
@@ -77,8 +75,6 @@ data_gen2 <- function(n, mu, X, g, plotit = T,seed=NULL,
         if (plotit) {
                 # graph & adjacency
                 suppressMessages(suppressWarnings(library(igraph)))
-                suppressMessages(suppressWarnings(library(visNetwork)))
-                suppressMessages(suppressWarnings(library(plotly)))
                 windows(width = 10.5, height = 3.5)
                 par(mfrow = c(1,3), mar = c(3,3,2,1), mgp = c(1.6,0.6,0), oma = c(0,0,0,0))
                 heat.plot0(Theta, main = "True probabilities")
@@ -86,18 +82,6 @@ data_gen2 <- function(n, mu, X, g, plotit = T,seed=NULL,
                 plot(x = graph.adjacency(adjmatrix = Y, mode = "undirected", diag = F), 
                      vertex.color = "black", edge.color = "firebrick1", vertex.label = NA, 
                      vertex.size = 4.5, layout = layout_with_kk, main = "Graph")
-                
-                net.data <- graph_from_adjacency_matrix(Y,diag = F,mode='undirected')
-                graph.net <- toVisNetworkData(net.data)
-                nodes = graph.net$nodes; edges =  graph.net$edges
-                graph = visNetwork(nodes, edges, main = main) %>%
-                        visIgraphLayout(layout = layout) %>%
-                        visNodes(font = list(size = font_size)) %>%
-                        visIgraphLayout(randomSeed = seed) %>%
-                        visPhysics(solver = "forceAtlas2Based", 
-                                   forceAtlas2Based = list(gravitationalConstant = -gravitation))
-                
-                
                 # surface
                 x <- seq(from = 0, to = 1, length = 20)
                 y <- seq(from = 0, to = 1, length = 20)
@@ -114,22 +98,28 @@ data_gen2 <- function(n, mu, X, g, plotit = T,seed=NULL,
                         persp(x = x, y = y, z = f, theta = theta, phi = 30, col = color[cut(zfacet, nbcol)], 
                               axes = T, ticktype = "simple", cex.axis = 0.5, zlab = "z")
                 title(main = "True Surface", outer = T, line = -1)
-                
-                fig <- plot_ly(x =~ x, y =~ y, z =~ f) %>% add_surface(
-                        contours = list(
-                                z = list(
-                                        show=TRUE,
-                                        usecolormap=TRUE,
-                                        highlightcolor="#ff0000",
-                                        project=list(z=TRUE))))
-                
-                fig <- fig %>% layout(
-                        scene = list(
-                                camera=list(
-                                        eye = list(x=1.87, y=0.88, z=-0.64))))
-                
-                
         }
         # return
-        list(z = z, Y = Y, Theta = Theta,graph=graph,surface = fig)
+        list(z = z, Y = Y, Theta = Theta)
 }
+
+# dyx <- function (i, j, n)
+# {
+#    ## returns (vectorized) linear index from aN upper triangular matrix position
+#    0.5*(n*(n-1)-(n-i+1)*(n-i))+j-i
+# }
+
+#relabel <- function(x) as.numeric(factor(x, labels = 1:length(unique(x))))
+
+loglik_hat_ih_R <- function (i, sai0, efi0, p, m, mu, alpha, sig2, W, X)
+{
+        out <- 0
+        nih0 <- length(sai0)
+        if (nih0 > 0) {
+                for (k in 1:nih0) {
+                        out <- out + efi0[k]*pnorm(mu - abs(zeta(p, m, X[i,], alpha, sig2, W) - zeta(p, m, X[sai0[k],], alpha, sig2, W)), 0, 1, 0, 1)
+                }
+        }
+        out
+}
+
